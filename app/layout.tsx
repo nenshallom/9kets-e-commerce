@@ -24,7 +24,7 @@ const lufga = localFont({
       weight: "700",
       style: "normal",
     },
-    // Add other weights (Light, ExtraBold) here if you have them
+   
   ],
   variable: "--font-lufga", // This is the CSS variable name
   display: "swap",
