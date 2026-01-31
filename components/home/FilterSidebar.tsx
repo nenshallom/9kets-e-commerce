@@ -18,17 +18,21 @@ export default function FilterSidebar({ className = "" }: FilterSidebarProps) {
   const handleFilterChange = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     
-    // If the user clicks the same filter again, remove it (toggle off)
-    // OR if they click "All", remove the filter
-    if (value === "All") {
+    // 1. Handle Category "All"
+    if (key === "category" && value === "All") {
       params.set("category", "all");
     } 
-    // If clicking the currently active specific filter, toggle it off (reset to all)
+    // 2. Handle Price "All" (NEW)
+    else if (key === "price" && value === "all") {
+      params.delete("price"); 
+    }
+    // 3. Toggle off logic
     else if (params.get(key) === value) {
       params.delete(key);
+      // If unchecking a category, revert to 'all' to keep the list populated
       if (key === "category") params.set("category", "all");
     } 
-    // Otherwise, set the specific filter
+    // 4. Set specific value
     else {
       params.set(key, value);
     }
@@ -39,11 +43,12 @@ export default function FilterSidebar({ className = "" }: FilterSidebarProps) {
   };
 
   const categories = [
-    "Smartphones", "Laptops", "Accessories", 
-    "Home Tech", "Headphones", "Gaming", "Cameras", "Tablets"
+    "Smartphones", "Laptops", "Accessories (chargers, etc.)", 
+    "Home Tech(smart speakers, cameras, etc)", "Headphones & Earbuds", "Gaming", "Cameras", "Tablets"
   ];
 
   const priceRanges = [
+    { label: "All Prices", value: "all" },
     { label: "Under ₦50,000", value: "under-50k" },
     { label: "₦50,000 – ₦100,000", value: "50k-100k" },
     { label: "₦100,000 – ₦250,000", value: "100k-250k" },
@@ -51,12 +56,11 @@ export default function FilterSidebar({ className = "" }: FilterSidebarProps) {
   ];
 
   return (
-    <aside className={`flex-shrink-0 space-y-8 ${className}`}>
+    <aside className={`shrink-0 space-y-8 ${className}`}>
       <div className="pb-4 border-b border-gray-400 border-dashed">
         <h3 className="text-xl font-bold text-secondary">Filter Options:</h3>
         {(activeCategory || activePrice) && (
           <button 
-          // Clearing all filters go to root (or can be set to ?category=all)
             onClick={() => router.push("/", { scroll: false })}
             className="text-xs text-red-500 font-bold mt-2 hover:underline"
           >
@@ -69,7 +73,6 @@ export default function FilterSidebar({ className = "" }: FilterSidebarProps) {
       <div>
         <h4 className="font-medium text-lg mb-4 text-secondary">By Categories</h4>
         <ul className="space-y-3">
-          {/* 'All Products' Option */}
           <li className="flex items-start gap-3">
             <input 
               type="checkbox" 
@@ -109,7 +112,11 @@ export default function FilterSidebar({ className = "" }: FilterSidebarProps) {
               <input 
                 type="checkbox" 
                 id={`price-${range.value}`}
-                checked={activePrice === range.value}
+                checked={
+                  range.value === "all" 
+                    ? !activePrice || activePrice === "all"
+                    : activePrice === range.value
+                }
                 onChange={() => handleFilterChange("price", range.value)}
                 className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
               />

@@ -1,13 +1,35 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { Providers } from "@/components/providers/Providers";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Toaster } from "react-hot-toast";
 
-// Optimize font loading
-const inter = Inter({ subsets: ["latin"] });
+// font
+const lufga = localFont({
+  src: [
+    {
+      path: "./fonts/Lufga-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Lufga-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Lufga-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+    // Add other weights (Light, ExtraBold) here if you have them
+  ],
+  variable: "--font-lufga", // This is the CSS variable name
+  display: "swap",
+});
+
 
 export const metadata: Metadata = {
   title: "9kets | Latest Gadgets",
@@ -21,7 +43,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} min-h-screen flex flex-col bg-white`}>
+      <body className={`${lufga.variable} min-h-screen flex flex-col bg-white`}>
       <Providers> 
           <Header />
           <main className="flex-1">

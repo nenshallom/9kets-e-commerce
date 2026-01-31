@@ -14,21 +14,21 @@ export default function Hero() {
       </div>
 
       <div className="container relative h-full flex flex-col justify-center items-center text-center px-4">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6 max-w-4xl leading-tight">
+        <h1 className="text-2xl md:text-6xl font-light mb-2 max-w-6xl leading-tight">
           Latest Gadgets for Everyday Innovation
         </h1>
-        <p className="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl">
+        <p className="text-sm md:text-3xl text-light mb-4 max-w-6xl">
           Explore smartphones, laptops, smartwatches, and accessories from trusted brands.
         </p>
         
-        <div className="flex flex-col gap-2 items-center">
+        <div className="flex flex-col gap-1 items-center">
           <Link 
             href="/shop" 
-            className="bg-primary text-secondary font-bold px-8 py-3 rounded-md hover:bg-orange-400 transition-colors w-2xs"
+            className="bg-primary text-secondary text-sm md:text-lg w-32 md:w-40 lg:w-72 py-2 lg:py-3 rounded-xl lg:mb-1.5 hover:bg-orange-400 transition-colors"
           >
             Shop Now
           </Link>
-          <button className="text-primary px-8 py-3 text-2xl hover:underline">
+          <button className="text-primary p-1 text-md md:text-lg lg:text-xl hover:underline">
             View Deals
           </button>
         </div>

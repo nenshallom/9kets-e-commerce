@@ -35,14 +35,14 @@ export default function Header() {
           </Link>
 
           {/* 2. Search Bar - Desktop */}
-          <div className="hidden sm:flex flex-1 border border-gray-200 rounded-md max-w-2xl mx-8 relative">
+          <div className="hidden sm:flex flex-1  max-w-2xl mx-8 relative">
             <input
               type="text"
               placeholder="Search"
-              className="w-full rounded-l-md border border-input-border py-2 pl-4 pr-10 text-sm focus:border-primary focus:outline-none"
+              className="w-full border border-accent rounded-l-2xl py-2 pl-4 pr-10 text-sm focus:border-primary focus:outline-none"
             />
-            <button className="bg-accent px-4 rounded-r-md cursor-pointer transition-colors">
-              <Search className="h-5 w-5 text-secondary hover:text-primary" />
+            <button className="bg-gray-100 border border-accent hover:bg-gray-200 px-10 rounded-r-2xl cursor-pointer transition-colors">
+              <Search className="h-6 w-6 text-accent hover:text-primary" />
             </button>
           </div>
 
@@ -55,7 +55,7 @@ export default function Header() {
 
           {/* 4. Icons */}
           <div className="flex items-center gap-4 ml-4">
-            <button className="hidden md:block">
+            <button>
               <Search className="h-6 w-6 text-primary hover:text-secondary" />
             </button>
             
@@ -75,7 +75,7 @@ export default function Header() {
 
             {/* Mobile Menu Trigger */}
             <button 
-              className="md:hidden text-secondary"
+              className="lg:hidden text-secondary"
               onClick={() => setIsMenuOpen(true)}
             >
               <Menu className="h-6 w-6" />
@@ -84,8 +84,8 @@ export default function Header() {
         </div>
 
         {/* 5. Swipeable Secondary Nav (Mobile & Desktop) */}
-        <div className="border-t border-gray-100 bg-gray-50">
-          <div className="container flex items-center justify-start md:justify-center gap-6 py-3 text-sm text-gray-500 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div className="border-gray-100 bg-light">
+          <div className="container flex items-center justify-start md:justify-center gap-6 py-3 text-sm text-accent overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {[
               "All products", "Smartphones", "Laptops", "Headphones", 
               "Home Tech", "Cameras", "Tablets", "Gaming"
@@ -114,7 +114,7 @@ export default function Header() {
       )}
 
       {/* Drawer Content */}
-      <div className={`fixed inset-y-0 right-0 z-50 w-[85%] max-w-sm bg-white shadow-xl transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}>
+      <div className={`fixed inset-y-0 right-0 z-50 w-[85%] max-w-sm bg-white shadow-xl transition-transform duration-300 ease-in-out lg:hidden ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}>
         <div className="flex flex-col h-full">
           
           {/* Drawer Header */}
@@ -132,7 +132,7 @@ export default function Header() {
           <div className="flex-1 overflow-y-auto p-4">
             
             {/* Primary Navigation */}
-            <nav className="flex flex-col gap-4 mb-8">
+            <nav className="md:hidden flex flex-col gap-4 mb-8">
                <Link href="/about" onClick={closeMenu} className="text-lg font-medium text-gray-700 hover:text-primary">
                  About us
                </Link>
