@@ -1,26 +1,23 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-primary: #F48E1A;    /* The Orange Button Color */
+  --color-secondary: #1D2434;  /* The Dark Navy (Footer/Headings) */
+  --color-accent: #F2F2F2;     /* The Light Gray Backgrounds */
+  
+  /* Form Colors */
+  --color-input-border: #E0E0E0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Custom Utility*/
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1rem;
+  max-width: 1280px; /* Constraints the width on large screens */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Base styles */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif; 
+  color: var(--color-secondary);
 }
