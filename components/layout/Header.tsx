@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useCart } from "@/context/CartContext";
 import FilterSidebar from "../home/FilterSidebar"; 
+
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -151,7 +152,9 @@ export default function Header() {
             {/* Integrated Filters */}
             <div className="bg-gray-50 p-4 rounded-lg">
               <h4 className="text-sm font-bold text-gray-400 uppercase mb-4">Filters</h4>
-              <FilterSidebar className="w-full" />
+              <Suspense fallback={<div className="text-sm text-gray-400">Loading filters...</div>}>
+                <FilterSidebar className="w-full" />
+              </Suspense>
             </div>
           </div>
           
