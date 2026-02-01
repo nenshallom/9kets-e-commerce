@@ -5,6 +5,56 @@ import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
 import { useState, useEffect, Suspense } from "react";
 import { useCart } from "@/context/CartContext";
 import FilterSidebar from "../home/FilterSidebar"; 
+import { useRouter, useSearchParams } from "next/navigation";
+
+
+// 1. SEARCH BAR COMPONENT
+function SearchBar() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  // Local state for search input
+  const [query, setQuery] = useState(searchParams.get("search") || "");
+
+  // Update local state if URL changes (e.g. back button)
+  useEffect(() => {
+    setQuery(searchParams.get("search") || "");
+  }, [searchParams]);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const params = new URLSearchParams(searchParams.toString());
+    
+    if (query.trim()) {
+      params.set("search", query.trim());
+    } else {
+      params.delete("search");
+    }
+
+    // Reset to first page on new search
+    params.set("page", "1");
+    
+    router.push(`/?${params.toString()}`, { scroll: false });
+  };
+
+  return (
+    <form onSubmit={handleSearch} className="hidden sm:flex flex-1 max-w-2xl mx-8 relative">
+      <input
+        type="text"
+        placeholder="Search products..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        className="w-full border border-accent rounded-l-2xl py-2 pl-4 pr-10 text-sm focus:border-primary focus:outline-none"
+      />
+      <button 
+        type="submit"
+        className="bg-gray-100 border border-accent hover:bg-gray-200 px-10 rounded-r-2xl cursor-pointer transition-colors"
+      >
+        <Search className="h-6 w-6 text-accent hover:text-primary" />
+      </button>
+    </form>
+  );
+}
 
 
 export default function Header() {
@@ -34,34 +84,25 @@ export default function Header() {
             9kets
           </Link>
 
-          {/* 2. Search Bar - Desktop */}
-          <div className="hidden sm:flex flex-1  max-w-2xl mx-8 relative">
-            <input
-              type="text"
-              placeholder="Search"
-              className="w-full border border-accent rounded-l-2xl py-2 pl-4 pr-10 text-sm focus:border-primary focus:outline-none"
-            />
-            <button className="bg-gray-100 border border-accent hover:bg-gray-200 px-10 rounded-r-2xl cursor-pointer transition-colors">
-              <Search className="h-6 w-6 text-accent hover:text-primary" />
-            </button>
-          </div>
+          {/*  Search Bar - Desktop */}
+          <Suspense fallback={<div className="flex-1 max-w-2xl mx-8 h-10 bg-gray-100 rounded-2xl animate-pulse" />}>
+            <SearchBar />
+          </Suspense>
 
-          {/* 3. Navigation Links (Desktop) */}
+          {/*  Navigation Links (Desktop) */}
           <nav className="hidden md:flex gap-6 text-sm font-medium text-gray-600">
             <Link href="#" className="hover:text-primary transition-colors">About us</Link>
             <Link href="#" className="hover:text-primary transition-colors">Contact</Link>
             <Link href="#" className="hover:text-primary transition-colors">Blog</Link>
           </nav>
 
-          {/* 4. Icons */}
+          {/*  Icons */}
           <div className="flex items-center gap-4 ml-4">
             <button>
               <Search className="h-6 w-6 text-primary hover:text-secondary" />
             </button>
-            
             <Link href="/cart" className="relative text-primary hover:text-secondary transition-colors">
               <ShoppingCart className="h-6 w-6" />
-              {/* Cart Badge */}
               {cartCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-white">
                   {cartCount}
@@ -94,7 +135,7 @@ export default function Header() {
                 key={cat} 
                 href={cat === "All products" ? "/?category=all" : `/?category=${cat}`}
                 scroll={false} // Prevent jump to top on filter change
-                className="whitespace-nowrap hover:text-primary transition-colors flex-shrink-0"
+                className="whitespace-nowrap hover:text-primary transition-colors shrink-0"
               >
                 {cat}
               </Link>
@@ -103,7 +144,7 @@ export default function Header() {
         </div>
       </header>
 
-      {/* 6. SLIDE-IN MOBILE MENU (DRAWER) */}
+      {/* SLIDE-IN MOBILE MENU (DRAWER) */}
       
       {/* Overlay Background */}
       {isMenuOpen && (

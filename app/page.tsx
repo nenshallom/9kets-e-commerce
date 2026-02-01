@@ -8,13 +8,14 @@ import ProductCard from "@/components/features/ProductCard";
 import { products } from "@/lib/data";
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 
-//  'HomeContent'
 function HomeContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   
   const productsRef = useRef<HTMLDivElement>(null);
   
+  // 1. Get Search Param
+  const searchParam = searchParams.get("search");
   const categoryParam = searchParams.get("category");
   const priceParam = searchParams.get("price");
   const pageParam = searchParams.get("page") || "1";
@@ -22,15 +23,18 @@ function HomeContent() {
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
 
-  // FILTER LOGIC
+  // 2. UPDATE FILTER LOGIC
   const filteredProducts = products.filter((product) => {
     let matchesCategory = true;
     let matchesPrice = true;
+    let matchesSearch = true; // Default to true
 
+    // Category Filter
     if (categoryParam && categoryParam !== "all") {
       matchesCategory = product.category.toLowerCase() === categoryParam.toLowerCase();
     }
 
+    // Price Filter
     if (priceParam) {
       switch (priceParam) {
         case "under-50k": matchesPrice = product.price < 50000; break;
@@ -41,17 +45,25 @@ function HomeContent() {
       }
     }
 
-    return matchesCategory && matchesPrice;
+    // Search Filter
+    if (searchParam) {
+      const query = searchParam.toLowerCase();
+      // Search in Name OR Brand OR Category
+      matchesSearch = 
+        product.name.toLowerCase().includes(query) || 
+        product.brand.toLowerCase().includes(query) ||
+        product.category.toLowerCase().includes(query);
+    }
+
+    return matchesCategory && matchesPrice && matchesSearch;
   });
 
-  // SORT LOGIC
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     const dateA = new Date(a.createdAt).getTime();
     const dateB = new Date(b.createdAt).getTime();
     return sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
   });
 
-  // PAGINATION LOGIC
   const itemsPerPage = 6;
   const currentPage = parseInt(pageParam);
   const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
@@ -61,19 +73,18 @@ function HomeContent() {
   const endIndex = startIndex + itemsPerPage;
   const currentProducts = sortedProducts.slice(startIndex, endIndex);
 
-  // Pagination Handler
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", page.toString());
     router.push(`/?${params.toString()}`, { scroll: false });
   };
 
-  // Scroll Effect
   useEffect(() => {
-    if (categoryParam || priceParam || searchParams.get("page")) {
+    // Scroll if any filter or page changes
+    if (categoryParam || priceParam || searchParam || searchParams.get("page")) {
       productsRef.current?.scrollIntoView({ behavior: "smooth" });
     }
-  }, [categoryParam, priceParam, pageParam, searchParams]);
+  }, [categoryParam, priceParam, searchParam, pageParam, searchParams]);
 
   return (
     <main className="bg-white pb-20">
@@ -89,9 +100,11 @@ function HomeContent() {
 
         <div className="flex-1">
           <div className="flex flex-col sm:flex-row justify-between items-center mb-8 relative z-30">
-            <p className="text-gray-900 font-medium mb-4 sm:mb-0 text-sm">
+            <p className="text-gray-900 font-medium mb-4 sm:mb-0">
               Showing {sortedProducts.length > 0 ? startIndex + 1 : 0}-{Math.min(endIndex, sortedProducts.length)} of {sortedProducts.length} Results
               {categoryParam && categoryParam !== "all" && <span className="text-primary font-bold ml-1">in {categoryParam}</span>}
+              {/* Show Search Text if active */}
+              {searchParam && <span className="text-primary font-bold ml-1">for &quot;{searchParam}&quot;</span>}
             </p>
             
             <div className="flex items-center gap-3 relative">
@@ -99,7 +112,7 @@ function HomeContent() {
               <div className="relative">
                 <button 
                   onClick={() => setIsSortOpen(!isSortOpen)}
-                  className="flex items-center gap-2 border border-gray-300 px-4 py-2 rounded-md text-sm font-medium hover:border-primary bg-white min-w-[140px] justify-between"
+                  className="flex items-center gap-2 border border-gray-300 px-4 py-2 rounded-md text-sm font-medium hover:border-primary bg-white min-w-35 justify-between"
                 >
                   {sortOrder === 'newest' ? 'Newest' : 'Oldest'} 
                   <ChevronDown className={`w-4 h-4 transition-transform ${isSortOpen ? 'rotate-180' : ''}`} />
@@ -115,7 +128,7 @@ function HomeContent() {
           </div>
 
           {currentProducts.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-1">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-6">
               {currentProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
@@ -132,12 +145,13 @@ function HomeContent() {
             </div>
           )}
 
-          {totalPages > 1 && (
+          {/* ... Pagination Logic (Unchanged) ... */}
+           {totalPages > 1 && (
             <div className="mt-16 flex justify-center items-center select-none">
               <button 
                 onClick={() => handlePageChange(validPage - 1)}
                 disabled={validPage === 1}
-                className="px-1 py-2 border rounded-l-md text-sm text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
+                className="px-4 py-2 border rounded-l-md text-sm text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
               >
                 <ChevronLeft className="w-4 h-4" /> Previous
               </button>
@@ -171,7 +185,6 @@ function HomeContent() {
   );
 }
 
-// EXPORT THE SUSPENSE WRAPPER
 export default function Home() {
   return (
     <Suspense fallback={<div className="container py-20 text-center">Loading products...</div>}>
