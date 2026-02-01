@@ -42,7 +42,7 @@ export default function ProfileLayout({ children }: { children: React.ReactNode 
         {/* User Info - Compact for Mobile */}
         <div className="flex items-center gap-3 mb-6">
           <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-200 relative">
-             <Image src="/user-avatar.png" alt="User" fill className="object-cover" /> 
+             <Image src="/profile/user-avatar.png" alt="User" fill className="object-cover" /> 
           </div>
           <span className="font-bold text-secondary">Ahurika</span>
         </div>
