@@ -2,7 +2,7 @@
 
 A modern, responsive e-commerce application built with **Next.js 16 (App Router)** and **Tailwind CSS**. This project focuses on clean architecture, visual stability, and a seamless user experience across devices.
 
-## 🚀 Live Demo
+## 🚀 Live Demo Link
 [https://9kets.netlify.app/]
 
 ## 🛠️ Tech Stack
@@ -43,16 +43,17 @@ A modern, responsive e-commerce application built with **Next.js 16 (App Router)
 
 /context       # Global State (CartContext)
 /lib           # Static Data & Utilities
-
-#🏃‍♂️ Getting Started
-# 1. Clone the repository
-git clone [https://github.com/nenshallom/9kets-e-commerce.git](https://github.com/nenshallom/9kets-e-commerce.git)
-# 2. Install dependencies
-npm install
-# 3. Run the development server
-npm run dev
-4. Open http://localhost:3000 with your browser. 
 ```
+
+## Getting Started
+1. Clone the repository \
+  `git clone [https://github.com/nenshallom/9kets-e-commerce.git](https://github.com/nenshallom/9kets-e-commerce.git)`
+2. Install dependencies \
+  `npm install`
+3. Run the development server \
+  `npm run dev`
+4. Open http://localhost:3000 with your browser. 
+
 
 ## Architectural Decisions
 - **URL as State:** I used URL Search Params for filtering instead of local state. This allows users to share filtered views and preserves state on refresh.
