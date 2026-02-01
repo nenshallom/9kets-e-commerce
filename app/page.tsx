@@ -135,7 +135,7 @@ function HomeContent() {
 
           {/* Product Grid */}
           {currentProducts.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-1 md:gap-3">
               {currentProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
