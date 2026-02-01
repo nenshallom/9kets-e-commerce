@@ -18,21 +18,17 @@ export default function FilterSidebar({ className = "" }: FilterSidebarProps) {
   const handleFilterChange = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     
-    // 1. Handle Category "All"
+    // Handle Category "All"
     if (key === "category" && value === "All") {
       params.set("category", "all");
     } 
-    // 2. Handle Price "All" (NEW)
     else if (key === "price" && value === "all") {
       params.delete("price"); 
     }
-    // 3. Toggle off logic
     else if (params.get(key) === value) {
       params.delete(key);
-      // If unchecking a category, revert to 'all' to keep the list populated
       if (key === "category") params.set("category", "all");
     } 
-    // 4. Set specific value
     else {
       params.set(key, value);
     }

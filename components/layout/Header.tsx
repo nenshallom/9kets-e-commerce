@@ -48,9 +48,9 @@ export default function Header() {
 
           {/* 3. Navigation Links (Desktop) */}
           <nav className="hidden md:flex gap-6 text-sm font-medium text-gray-600">
-            <Link href="/about" className="hover:text-primary transition-colors">About us</Link>
-            <Link href="/contact" className="hover:text-primary transition-colors">Contact</Link>
-            <Link href="/blog" className="hover:text-primary transition-colors">Blog</Link>
+            <Link href="#" className="hover:text-primary transition-colors">About us</Link>
+            <Link href="#" className="hover:text-primary transition-colors">Contact</Link>
+            <Link href="#" className="hover:text-primary transition-colors">Blog</Link>
           </nav>
 
           {/* 4. Icons */}

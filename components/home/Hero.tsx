@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Image from "next/image";
 
 export default function Hero() {
@@ -22,13 +21,12 @@ export default function Hero() {
         </p>
         
         <div className="flex flex-col gap-1 items-center">
-          <Link 
-            href="/shop" 
-            className="bg-primary text-secondary text-sm md:text-lg w-32 md:w-40 lg:w-72 py-2 lg:py-3 rounded-xl lg:mb-1.5 hover:bg-orange-400 transition-colors"
+          <button 
+            className="bg-primary text-secondary text-sm md:text-lg w-32 md:w-40 lg:w-72 py-2 lg:py-3 rounded-xl lg:mb-1.5 hover:bg-primary/80 transition-colors"
           >
             Shop Now
-          </Link>
-          <button className="text-primary p-1 text-md md:text-lg lg:text-xl hover:underline">
+          </button>
+          <button className="text-primary p-1 text-md md:text-lg lg:text-xl cursor-pointer hover:underline">
             View Deals
           </button>
         </div>

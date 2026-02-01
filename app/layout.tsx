@@ -26,7 +26,7 @@ const lufga = localFont({
     },
    
   ],
-  variable: "--font-lufga", // This is the CSS variable name
+  variable: "--font-lufga", 
   display: "swap",
 });
 

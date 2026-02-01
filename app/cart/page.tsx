@@ -1,16 +1,16 @@
 "use client";
 
 import { useCart } from "@/context/CartContext";
-import { Trash2, Minus, Plus } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import ProductCard from "@/components/features/ProductCard";
 import { products } from "@/lib/data"; 
+import RelatedProducts from "@/components/features/RelatedProducts";
 
 export default function CartPage() {
   const { items, removeFromCart, updateQuantity, getCartTotal } = useCart();
   
-  // Calculate Costs (Mock logic for Shipping/VAT)
+  // Calculate Costs 
   const subtotal = getCartTotal();
   const shipping = items.length > 0 ? 10000 : 0;
   const vat = items.length > 0 ? 3000 : 0;
@@ -35,7 +35,7 @@ export default function CartPage() {
 
   return (
     <div className="container py-12 bg-white">
-      <h1 className="text-xl font-bold mb-8">Your Cart</h1>
+      <h1 className="text-md md:text-xl font-light mb-2 md:mb-4">Your Cart</h1>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         
@@ -69,7 +69,7 @@ export default function CartPage() {
                   <p className="font-bold text-sm">Sub-Total: {formatCurrency(item.price * item.quantity)}</p>
                 </div>
 
-                {/* Controls (Right aligned on desktop) */}
+                {/* Controls  */}
                 <div className="flex flex-row sm:flex-col justify-between items-end gap-4">
                   <button 
                     onClick={() => removeFromCart(item.id)}
@@ -124,10 +124,10 @@ export default function CartPage() {
               </div>
             </div>
 
-            <Link href="/checkout" className="block w-full text-center bg-primary text-secondary font-bold py-3           rounded-full hover:bg-orange-400 transition-colors mb-3">
+            <Link href="/checkout" className="block w-full text-center bg-primary text-secondary font-bold py-3           rounded-full hover:bg-primary/80 transition-colors mb-3 max-w-[300px]:text-xs">
               Proceed to Check out
           </Link>
-            <Link href="/" className="block w-full text-center border border-gray-200 text-gray-600 font-medium py-3 rounded-full hover:bg-gray-50 transition-colors">
+            <Link href="/" className="block w-full text-center border border-gray-200 text-gray-600 font-medium py-3 rounded-full hover:bg-primary/20 transition-colors">
               Continue Shopping
             </Link>
           </div>
@@ -135,18 +135,7 @@ export default function CartPage() {
       </div>
 
       {/* "You might also like" Section */}
-      <div className="mt-20">
-        <h2 className="text-2xl font-bold text-center mb-2">You might also like</h2>
-        <p className="text-center text-secondary font-bold text-xl mb-12">
-          Discover more gaming gear and accessories to level up your play
-        </p>
-        
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-          {relatedProducts.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
-      </div>
+      <RelatedProducts products={relatedProducts} />
     </div>
   );
 }

@@ -12,7 +12,7 @@ const orders = [
     total: 1430000,
     itemsCount: 2,
     status: "Completed",
-    images: ["/products/xbox.png", "/products/iphone15.png"],
+    images: ["/products/xbox.png", "/products/iphone15.jpg"],
   },
   {
     id: "#ORD-10023",
@@ -20,7 +20,7 @@ const orders = [
     total: 1200000,
     itemsCount: 1,
     status: "In Progress",
-    images: ["/products/xbox.png"],
+    images: ["/products/xbox.png", "/products/airpod.png", "/products/cannon2.jpeg"],
   },
   {
     id: "#ORD-10024",
@@ -28,7 +28,7 @@ const orders = [
     total: 950000,
     itemsCount: 1,
     status: "Cancelled",
-    images: ["/products/dellxps.png"],
+    images: ["/products/dellxps.png", "/products/xbox.png", "/products/samsungs24.jpeg"],
   },
 ];
 
@@ -82,14 +82,10 @@ export default function OrderHistory() {
             
             {/* Order Header Info */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-              
-              {/* ID & Date */}
               <div>
                 <h3 className="text-lg font-bold text-secondary">{order.id}</h3>
                 <p className="text-sm text-gray-500">{order.date}</p>
               </div>
-
-              {/* Total Cost */}
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-gray-50 rounded-full border border-gray-200">
                   <Wallet className="w-5 h-5 text-gray-500" />
@@ -114,7 +110,7 @@ export default function OrderHistory() {
               </div>
             </div>
 
-            {/* Order Details Link (Right aligned) */}
+            {/* Order Details Link  */}
             <div className="flex justify-end mb-4">
                <button className="flex items-center gap-2 text-sm font-bold text-secondary hover:text-primary transition-colors">
                  View Order Details <ExternalLink className="w-4 h-4" />

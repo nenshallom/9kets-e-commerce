@@ -4,7 +4,6 @@ import { useCart } from "@/context/CartContext";
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { CreditCard, Wallet, CheckCircle } from "lucide-react"; 
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
@@ -14,7 +13,7 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState("credit-card");
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // Calculate Costs (Same logic as Cart Page)
+  // Calculate Costs
   const subtotal = getCartTotal();
   const shipping = items.length > 0 ? 10000 : 0;
   const vat = items.length > 0 ? 3000 : 0;
@@ -50,7 +49,7 @@ export default function CheckoutPage() {
   return (
     <div className="bg-white min-h-screen pb-20">
       <div className="container py-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-8">Checkout</h1>
+        <h1 className="text-md md:text-xl font-light mb-2 md:mb-4">Checkout</h1>
 
         <form onSubmit={handlePayment} className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           
@@ -112,18 +111,41 @@ export default function CheckoutPage() {
                   onClick={() => setPaymentMethod("credit-card")}
                 >
                   <div className="flex items-center gap-4">
-                    <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${
-                      paymentMethod === "credit-card" ? "border-primary" : "border-gray-300"
+                    <div className={`w-4 h-4 rounded-full flex items-center justify-center ${
+                      paymentMethod === "credit-card" ? "bg-light" : "border border-accent/50"
                     }`}>
-                      {paymentMethod === "credit-card" && <div className="w-2.5 h-2.5 bg-primary rounded-full" />}
+                      {paymentMethod === "credit-card" && <div className="w-4 h-4 border-5 border-primary rounded-full" />}
                     </div>
+                    <div>
                     <span className="font-bold text-gray-900">Credit Card</span>
                     <p className="text-xs text-gray-500 hidden sm:block">Pay with your credit or debit card.</p>
+                    </div>
                   </div>
                   <div className="flex gap-2">
-                     {/* Mock Card Icons */}
-                     <div className="w-8 h-5 bg-blue-800 rounded flex items-center justify-center text-[6px] text-white">VISA</div>
-                     <div className="w-8 h-5 bg-red-600 rounded flex items-center justify-center text-[6px] text-white">MC</div>
+                    <div className="w-10 h-6 relative">
+                      <Image 
+                        src="/payment/card.png" // Update this path to your actual file
+                        alt="Visa" 
+                        fill 
+                        className="object-contain" 
+                      />
+                    </div>
+                    <div className="w-10 h-6 relative">
+                      <Image 
+                        src="/payment/card2.png" // Update this path to your actual file
+                        alt="Mastercard" 
+                        fill 
+                        className="object-contain" 
+                      />
+                    </div>
+                    <div className="w-10 h-6 relative">
+                      <Image 
+                        src="/payment/card3.png" // Update this path to your actual file
+                        alt="Mastercard" 
+                        fill 
+                        className="object-contain" 
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -135,21 +157,33 @@ export default function CheckoutPage() {
                   onClick={() => setPaymentMethod("paypal")}
                 >
                   <div className="flex items-center gap-4">
-                    <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${
-                      paymentMethod === "paypal" ? "border-primary" : "border-gray-300"
+                    <div className={`w-4 h-4 rounded-full flex items-center justify-center ${
+                      paymentMethod === "paypal" ? "bg-light" : "border border-accent/50"
                     }`}>
-                      {paymentMethod === "paypal" && <div className="w-2.5 h-2.5 bg-primary rounded-full" />}
+                      {paymentMethod === "paypal" && <div className="w-4 h-4 border-5 border-primary rounded-full" />}
                     </div>
-                    <span className="font-bold text-gray-900">PayPal</span>
-                    <p className="text-xs text-gray-500 hidden sm:block">Pay securely with your PayPal account.</p>
+                    <div>
+                      <span className="font-bold text-gray-900">PayPal</span> 
+                       <p className="text-xs text-gray-500 hidden sm:block">Pay securely with your PayPal account.</p>
+                    </div>
+                    
                   </div>
-                  <div className="w-8 h-8 bg-blue-100 rounded flex items-center justify-center text-blue-600 font-bold text-xs">P</div>
+                
+                  <div className="w-10 h-6 relative">
+                      <Image 
+                        src="/payment/paypal.png" 
+                        alt="Mastercard" 
+                        fill 
+                        className="object-contain" 
+                      />
+                    </div>
+                  
                 </div>
 
               </div>
             </section>
 
-            {/* 3. Card Details (Conditional) */}
+            {/* 3. Card Details */}
             {paymentMethod === "credit-card" && (
               <section className="animate-in fade-in slide-in-from-top-4 duration-300">
                 <div className="space-y-6">
@@ -181,7 +215,7 @@ export default function CheckoutPage() {
               <div className="space-y-4 mb-6 max-h-[300px] overflow-y-auto pr-2">
                 {items.map((item) => (
                   <div key={item.id + item.selectedColor} className="flex gap-4 text-sm">
-                    {/* Compact layout for summary */}
+                    {/*  summary */}
                     <div className="flex-1">
                        <p className="font-bold text-gray-900">{item.name}</p>
                        <p className="text-xs text-gray-500">{item.quantity} x {formatCurrency(item.price)}</p>

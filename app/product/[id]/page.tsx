@@ -1,7 +1,7 @@
 import { products } from "@/lib/data";
 import ProductGallery from "@/app/product/ProductGallery";
 import ProductInfo from "@/app/product/ProductInfo";
-import ProductCard from "@/components/features/ProductCard";
+import RelatedProducts from "@/components/features/RelatedProducts";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
@@ -60,15 +60,9 @@ export default async function ProductPage({ params }: Props) {
         </div>
 
         {relatedProducts.length > 0 && (
-          <div className=" text-center">
-            <h2 className="text-2xs font-bold text-secondary mb-2">you might also like</h2>
-            <h2 className="text-2xl font-bold text-secondary mb-8">Discover more {product.category} and accessories to level up your play</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-1">
-               {relatedProducts.map((p) => (
-                 <ProductCard key={p.id} product={p} />
-               ))}
-            </div>
-          </div>
+          <RelatedProducts 
+            products={relatedProducts} 
+          />
         )}
       </div>
     </main>

@@ -4,21 +4,21 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { 
-  User, Package, MapPin, CreditCard, Bell, 
-  TicketPercent, ScrollText, Settings, HelpCircle, LogOut, ChevronDown 
+  User, ReceiptText, MapPin, CreditCard, Bell, 
+  TicketPercent, ScrollText, Settings, CircleAlert, LogOut, ChevronDown 
 } from "lucide-react";
 import Image from "next/image";
 
 const sidebarLinks = [
-  { name: "Account Details", href: "/profile/details", icon: User },
-  { name: "My Orders", href: "/profile", icon: Package },
-  { name: "My Addresses", href: "/profile/address", icon: MapPin },
-  { name: "My Payments", href: "/profile/payment", icon: CreditCard },
-  { name: "Notification Setting", href: "/profile/notifications", icon: Bell },
-  { name: "Coupons", href: "/profile/coupons", icon: TicketPercent },
-  { name: "My Recipes", href: "/profile/recipes", icon: ScrollText },
-  { name: "Account Settings", href: "/profile/settings", icon: Settings },
-  { name: "Help Center", href: "/profile/help", icon: HelpCircle },
+  { name: "Account Details", href: "#", icon: User }, 
+  { name: "My Orders", href: "/profile", icon: ReceiptText },
+  { name: "My Addresses", href: "#", icon: MapPin },
+  { name: "My Payments", href: "#", icon: CreditCard },
+  { name: "Notification Setting", href: "#", icon: Bell },
+  { name: "Coupons", href: "#", icon: TicketPercent },
+  { name: "My Recipes", href: "#", icon: ScrollText },
+  { name: "Account Settings", href: "#", icon: Settings },
+  { name: "Help Center", href: "#", icon: CircleAlert },
 ];
 
 export default function ProfileLayout({ children }: { children: React.ReactNode }) {
@@ -87,10 +87,10 @@ export default function ProfileLayout({ children }: { children: React.ReactNode 
       </div>
 
       {/* 2. DESKTOP SIDEBAR (Hidden on Mobile) */}
-      <aside className="hidden lg:block w-64 flex-shrink-0 space-y-8">
+      <aside className="hidden lg:block w-64 shrink-0 space-y-8">
         <div className="flex items-center gap-3 px-4">
-          <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 relative">
-             <Image src="/user-avatar.png" alt="User" fill className="object-cover" /> 
+          <div className="w-12 h-12 rounded-full overflow-hidden bg-primary relative">
+             <Image src="/profile/user.png" alt="User" fill className="object-cover" /> 
           </div>
           <span className="font-bold text-secondary">Ahurika</span>
         </div>
@@ -117,15 +117,15 @@ export default function ProfileLayout({ children }: { children: React.ReactNode 
         </nav>
 
         <div className="pt-8 px-4 border-t border-gray-100 mt-auto">
-          <button className="flex items-center gap-3 text-red-500 font-bold text-sm hover:text-red-700">
-            <LogOut className="w-5 h-5" />
+          <button className="flex items-center gap-2 text-red-500 font-bold text-sm hover:text-red-700">
+            <LogOut className="w-5 h-5 rotate-180" />
             Logout
           </button>
         </div>
       </aside>
 
       {/* MAIN CONTENT */}
-      <div className="flex-1 min-h-[500px]">
+      <div className="flex-1 min-h-125">
         {children}
       </div>
     </div>

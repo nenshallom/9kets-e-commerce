@@ -29,9 +29,9 @@ export default function Footer() {
         <div className="max-w-40">
           <h4 className="font-bold mb-4">Customer Service</h4>
           <ul className="space-y-2 text-sm text-gray-300">
-            <li><Link href="/contact" className="hover:text-primary">Contact Us</Link></li>
-            <li><Link href="/shipping" className="hover:text-primary">Shipping & Returns</Link></li>
-            <li><Link href="/faq" className="hover:text-primary">FAQ</Link></li>
+            <li><Link href="#" className="hover:text-primary">Contact Us</Link></li>
+            <li><Link href="#" className="hover:text-primary">Shipping & Returns</Link></li>
+            <li><Link href="#" className="hover:text-primary">FAQ</Link></li>
           </ul>
         </div>
 
@@ -39,9 +39,9 @@ export default function Footer() {
         <div className="max-w-40">
           <h4 className="font-bold mb-4">About Us</h4>
           <ul className="space-y-2 text-sm text-gray-300">
-            <li><Link href="/story" className="hover:text-primary">Our Story</Link></li>
-            <li><Link href="/careers" className="hover:text-primary">Careers</Link></li>
-            <li><Link href="/blog" className="hover:text-primary">Blog</Link></li>
+            <li><Link href="#" className="hover:text-primary">Our Story</Link></li>
+            <li><Link href="#" className="hover:text-primary">Careers</Link></li>
+            <li><Link href="#" className="hover:text-primary">Blog</Link></li>
           </ul>
         </div>
 

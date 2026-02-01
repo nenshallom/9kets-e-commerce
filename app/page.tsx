@@ -8,7 +8,7 @@ import ProductCard from "@/components/features/ProductCard";
 import { products } from "@/lib/data";
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 
-//  RENAME main logic component to 'HomeContent'
+//  'HomeContent'
 function HomeContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -65,20 +65,15 @@ function HomeContent() {
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", page.toString());
-    
     router.push(`/?${params.toString()}`, { scroll: false });
-    
-    if (productsRef.current) {
-      productsRef.current.scrollIntoView({ behavior: "smooth" });
-    }
   };
 
   // Scroll Effect
   useEffect(() => {
-    if (categoryParam || priceParam) {
+    if (categoryParam || priceParam || searchParams.get("page")) {
       productsRef.current?.scrollIntoView({ behavior: "smooth" });
     }
-  }, [categoryParam, priceParam]);
+  }, [categoryParam, priceParam, pageParam, searchParams]);
 
   return (
     <main className="bg-white pb-20">
@@ -94,7 +89,7 @@ function HomeContent() {
 
         <div className="flex-1">
           <div className="flex flex-col sm:flex-row justify-between items-center mb-8 relative z-30">
-            <p className="text-gray-900 font-medium mb-4 sm:mb-0">
+            <p className="text-gray-900 font-medium mb-4 sm:mb-0 text-sm">
               Showing {sortedProducts.length > 0 ? startIndex + 1 : 0}-{Math.min(endIndex, sortedProducts.length)} of {sortedProducts.length} Results
               {categoryParam && categoryParam !== "all" && <span className="text-primary font-bold ml-1">in {categoryParam}</span>}
             </p>
@@ -138,11 +133,11 @@ function HomeContent() {
           )}
 
           {totalPages > 1 && (
-            <div className="mt-16 flex justify-end items-center gap-2 select-none">
+            <div className="mt-16 flex justify-center items-center select-none">
               <button 
                 onClick={() => handlePageChange(validPage - 1)}
                 disabled={validPage === 1}
-                className="px-4 py-2 border rounded-md text-sm text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
+                className="px-1 py-2 border rounded-l-md text-sm text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
               >
                 <ChevronLeft className="w-4 h-4" /> Previous
               </button>
@@ -151,7 +146,7 @@ function HomeContent() {
                 <button
                   key={page}
                   onClick={() => handlePageChange(page)}
-                  className={`px-4 py-2 rounded-md text-sm font-bold transition-colors ${
+                  className={`px-4 py-2 text-sm font-bold transition-colors ${
                     validPage === page
                       ? "bg-secondary text-white"
                       : "border border-gray-200 hover:bg-gray-50 text-gray-700"
@@ -164,7 +159,7 @@ function HomeContent() {
               <button 
                 onClick={() => handlePageChange(validPage + 1)}
                 disabled={validPage === totalPages}
-                className="px-4 py-2 border rounded-md text-sm text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
+                className="px-4 py-2 border rounded-r-md text-sm text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
               >
                 Next <ChevronRight className="w-4 h-4" />
               </button>
