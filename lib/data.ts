@@ -119,7 +119,7 @@ export const products: Product[] = [
       brand: "Samsung",
       price: 1350000,
       image: "/products/samsungs24.jpeg", 
-      images: ["/products/samsung24.jpeg", "/products/samsung2.jpeg", "/products/samsung3.jpeg"],
+      images: ["/products/samsungs24.jpeg", "/products/samsung2.jpeg", "/products/samsung3.jpeg"],
       category: "Smartphones",
       rating: 4.9,
       reviews: 950,

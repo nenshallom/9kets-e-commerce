@@ -11,9 +11,9 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
   const [selectedImage, setSelectedImage] = useState(0);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col">
       {/* Main Large Image */}
-      <div className="relative h-[400px] md:h-[400px]  rounded-lg overflow-hidden  flex items-center justify-center p-8">
+      <div className="relative h-100  rounded-lg overflow-hidden  flex items-center justify-center">
         <Image
           src={images[selectedImage]}
           alt="Product Main"

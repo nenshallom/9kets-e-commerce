@@ -30,9 +30,9 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
 
         {/* Details Section */}
-        <div className="p-2 flex flex-col flex-1">
+        <div className="p-2 flex text-left flex-col flex-1">
           {/* Title highlights on hover */}
-          <h3 className="font-medium text-sm md:text-base text-gray-900 mb-1 group-hover:text-primary transition-colors">
+          <h3 className="font-medium  text-sm md:text-base text-gray-900 mb-1 group-hover:text-primary transition-colors">
             {product.name}
           </h3>
           <p className="text-xs text-accent mb-2">{product.brand}</p>

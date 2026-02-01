@@ -51,35 +51,19 @@ export default async function ProductPage({ params }: Props) {
           </Link>
           
           <ChevronRight className="w-4 h-4" />
-          <span className="text-gray-900 font-medium truncate max-w-[200px]">{product.name}</span>
+          <span className="text-gray-900 font-medium truncate max-w-50">{product.name}</span>
         </nav>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20 ">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-20">
           <ProductGallery images={product.images || [product.image]} />
           <ProductInfo product={product} />
         </div>
 
-        <div className="mb-20">
-          <div className="border-b border-gray-200 mb-6">
-            <div className="flex gap-8">
-               <button className="pb-4 border-b-2 border-primary text-primary font-bold">Description</button>
-               <button className="pb-4 border-b-2 border-transparent text-gray-500 hover:text-gray-700">Reviews ({product.reviews})</button>
-            </div>
-          </div>
-          <div className="text-gray-600 leading-relaxed space-y-4">
-             <p>{product.description}</p>
-             <p>
-               Experience the power of {product.brand} technology. Designed for professionals and enthusiasts alike, 
-               this {product.category.slice(0, -1)} offers unparalleled performance and style.
-             </p>
-          </div>
-        </div>
-
         {relatedProducts.length > 0 && (
           <div className=" text-center">
-            <h2 className="text-2xs font-bold text-secondary mb-8">you might also like</h2>
+            <h2 className="text-2xs font-bold text-secondary mb-2">you might also like</h2>
             <h2 className="text-2xl font-bold text-secondary mb-8">Discover more {product.category} and accessories to level up your play</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-1">
                {relatedProducts.map((p) => (
                  <ProductCard key={p.id} product={p} />
                ))}

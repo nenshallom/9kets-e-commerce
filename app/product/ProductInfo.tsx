@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Product } from "@/lib/data";
 import { Star, Minus, Plus, Heart, ShieldCheck, ChevronDown, ChevronUp } from "lucide-react";
 import Image from "next/image";
@@ -9,6 +10,7 @@ import { useCart } from "@/context/CartContext";
 import toast from "react-hot-toast";
 
 export default function ProductInfo({ product }: { product: Product }) {
+  const router = useRouter();
   const gallery = product.images && product.images.length > 0 ? product.images : [product.image];
   const { addToCart, removeFromCart, items } = useCart();
   const [quantity, setQuantity] = useState(1);
@@ -51,12 +53,23 @@ export default function ProductInfo({ product }: { product: Product }) {
       toast.success(`${product.name} added to cart!`); // Green/Success toast
     }
   };
+  // Handler for 'Buy Now' Button
+  const handleBuyNow = () => {
+    if (isInCart) {
+      // 1. If item exists, DO NOT add again. Just redirect.
+      router.push("/cart");
+    } else {
+      // 2. If item does NOT exist, add it, then redirect.
+      addToCart(product, quantity, selectedColor.name);
+      router.push("/cart");
+    }
+  };
 
   return (
-    <div className="flex flex-col gap-6 font-sans">
+    <div className="flex flex-col gap-3 font-sans">
       {/* 1. Header Section */}
       <div>
-        <h1 className="text-3xl font-medium text-secondary mb-2">{product.name}</h1>
+        <h1 className="text-2xl md:text-3xl font-medium text-secondary mb-2">{product.name}</h1>
         <div className="flex items-center gap-4 text-sm mb-4">
           <div className="flex items-center">
              {[...Array(5)].map((_, i) => (
@@ -67,7 +80,7 @@ export default function ProductInfo({ product }: { product: Product }) {
           <span className="text-gray-300">|</span>
           <span className="font-medium text-gray-600">{product.brand}</span>
         </div>
-        <div className="text-3xl font-bold text-black">
+        <div className="text-2xl md:text-3xl font-bold text-black">
           {formatCurrency(product.price)}
         </div>
       </div>
@@ -98,7 +111,7 @@ export default function ProductInfo({ product }: { product: Product }) {
                 selectedColor.name === color.name ? "border-primary" : "border-gray-200"
               }`}
             >
-              <Image src={color.image} alt={color.name} width={40} height={40} className="object-cover" />
+              <Image src={color.image} alt={color.name} width={40} height={40} className="object-cover p-1" />
             </button>
           ))}
         </div>
@@ -137,9 +150,12 @@ export default function ProductInfo({ product }: { product: Product }) {
           {isInCart ? "Remove from Cart" : "Add to Cart"}
         </button>
         
-        <Link href="/checkout" className="flex-1 border border-secondary text-center text-secondary font-bold py-3 px-6 rounded-full hover:bg-gray-50 transition-colors">
+        <button 
+          onClick={handleBuyNow}
+          className="flex-1 border border-secondary text-center text-secondary font-bold py-3 px-6 rounded-full hover:bg-gray-50 transition-colors"
+        >
           Buy now
-        </Link>
+        </button>
       </div>
 
       {/* 5. Trust Signals */}
@@ -161,7 +177,7 @@ export default function ProductInfo({ product }: { product: Product }) {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-1 md:flex-none px-6 py-2 rounded-full text-sm font-medium transition-all ${
+              className={`flex-1 md:flex-none md:px-6 py-2 rounded-full text-sm font-medium transition-all ${
                 activeTab === tab
                   ? "bg-white text-secondary shadow-sm"
                   : "text-gray-500 hover:text-gray-700"
