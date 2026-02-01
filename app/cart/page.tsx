@@ -7,6 +7,7 @@ import Link from "next/link";
 import { products } from "@/lib/data"; 
 import RelatedProducts from "@/components/features/RelatedProducts";
 
+// Cart Page Component
 export default function CartPage() {
   const { items, removeFromCart, updateQuantity, getCartTotal } = useCart();
   
@@ -15,7 +16,6 @@ export default function CartPage() {
   const shipping = items.length > 0 ? 10000 : 0;
   const vat = items.length > 0 ? 3000 : 0;
   const total = subtotal + shipping + vat;
-
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 }).format(amount);
   };

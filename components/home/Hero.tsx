@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="relative w-full h-[400px] md:h-[500px] bg-gradient-to-r from-gray-800 to-gray-900 text-white overflow-hidden">
+    <section className="relative w-full h-100 md:h-125 bg-linear-to-r from-gray-800 to-gray-900 text-white overflow-hidden">
       <div className="absolute inset-0 opacity-40">
         <Image 
           src="/hero-bg.png"

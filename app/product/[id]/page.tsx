@@ -5,6 +5,7 @@ import RelatedProducts from "@/components/features/RelatedProducts";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
+
 type Props = {
   params: Promise<{ id: string }>;
 };
@@ -20,6 +21,7 @@ export default async function ProductPage({ params }: Props) {
 
   const product = products.find((p) => p.id === id);
 
+  // Handle Product Not Found
   if (!product) {
     return (
       <div className="container py-20 text-center">
@@ -32,6 +34,7 @@ export default async function ProductPage({ params }: Props) {
     );
   }
 
+  // Get Related Products
   const relatedProducts = products
     .filter((p) => p.category === product.category && p.id !== product.id)
     .slice(0, 4);

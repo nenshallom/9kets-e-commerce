@@ -3,6 +3,8 @@ import { Star } from "lucide-react";
 import Link from "next/link";
 import { Product } from "@/lib/data";
 
+
+// Format currency in NGN
 const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 }).format(amount);
 };
@@ -13,7 +15,7 @@ export default function ProductCard({ product }: { product: Product }) {
       <div className="h-full border border-gray-100 rounded-xl bg-white overflow-hidden hover:shadow-xl hover:border-primary/20 transition-all duration-300 flex flex-col">
         
         {/* Image Section */}
-        <div className="relative h-[220px] flex items-center justify-center p-1">
+        <div className="relative h-55 flex items-center justify-center p-1">
           {product.badge && (
             <span className="absolute top-4 right-4 bg-white text-[10px] font-bold px-3 py-1 rounded-full shadow-sm uppercase tracking-wide z-10">
               {product.badge}

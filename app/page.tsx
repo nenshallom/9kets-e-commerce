@@ -5,8 +5,9 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Hero from "@/components/home/Hero";
 import FilterSidebar from "@/components/home/FilterSidebar";
 import ProductCard from "@/components/features/ProductCard";
+import Pagination from "@/components/ui/Pagination"; 
 import { products } from "@/lib/data";
-import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 function HomeContent() {
   const searchParams = useSearchParams();
@@ -14,7 +15,7 @@ function HomeContent() {
   
   const productsRef = useRef<HTMLDivElement>(null);
   
-  // 1. Get Search Param
+  //  Get URL Params
   const searchParam = searchParams.get("search");
   const categoryParam = searchParams.get("category");
   const priceParam = searchParams.get("price");
@@ -23,11 +24,11 @@ function HomeContent() {
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
 
-  // 2. UPDATE FILTER LOGIC
+  // FILTERING LOGIC (Category + Price + Search)
   const filteredProducts = products.filter((product) => {
     let matchesCategory = true;
     let matchesPrice = true;
-    let matchesSearch = true; // Default to true
+    let matchesSearch = true;
 
     // Category Filter
     if (categoryParam && categoryParam !== "all") {
@@ -48,7 +49,6 @@ function HomeContent() {
     // Search Filter
     if (searchParam) {
       const query = searchParam.toLowerCase();
-      // Search in Name OR Brand OR Category
       matchesSearch = 
         product.name.toLowerCase().includes(query) || 
         product.brand.toLowerCase().includes(query) ||
@@ -58,12 +58,14 @@ function HomeContent() {
     return matchesCategory && matchesPrice && matchesSearch;
   });
 
+  // SORTING LOGIC
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     const dateA = new Date(a.createdAt).getTime();
     const dateB = new Date(b.createdAt).getTime();
     return sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
   });
 
+  //  PAGINATION LOGIC
   const itemsPerPage = 6;
   const currentPage = parseInt(pageParam);
   const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
@@ -73,14 +75,15 @@ function HomeContent() {
   const endIndex = startIndex + itemsPerPage;
   const currentProducts = sortedProducts.slice(startIndex, endIndex);
 
+  // Pagination Handler (Updates URL only)
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", page.toString());
     router.push(`/?${params.toString()}`, { scroll: false });
   };
 
+  //  SCROLL EFFECT (Handles visual updates)
   useEffect(() => {
-    // Scroll if any filter or page changes
     if (categoryParam || priceParam || searchParam || searchParams.get("page")) {
       productsRef.current?.scrollIntoView({ behavior: "smooth" });
     }
@@ -94,25 +97,28 @@ function HomeContent() {
         ref={productsRef} 
         className="container py-12 flex flex-col lg:flex-row gap-12 scroll-mt-24"
       >
+        {/* Sidebar */}
         <div className="hidden lg:block">
           <FilterSidebar className="w-64" />
         </div>
 
+        {/* Main Content */}
         <div className="flex-1">
+          {/* Controls Header */}
           <div className="flex flex-col sm:flex-row justify-between items-center mb-8 relative z-30">
             <p className="text-gray-900 font-medium mb-4 sm:mb-0">
               Showing {sortedProducts.length > 0 ? startIndex + 1 : 0}-{Math.min(endIndex, sortedProducts.length)} of {sortedProducts.length} Results
               {categoryParam && categoryParam !== "all" && <span className="text-primary font-bold ml-1">in {categoryParam}</span>}
-              {/* Show Search Text if active */}
               {searchParam && <span className="text-primary font-bold ml-1">for &quot;{searchParam}&quot;</span>}
             </p>
             
+            {/* Sort Dropdown */}
             <div className="flex items-center gap-3 relative">
               <span className="text-gray-600 text-sm">Sort by:</span>
               <div className="relative">
                 <button 
                   onClick={() => setIsSortOpen(!isSortOpen)}
-                  className="flex items-center gap-2 border border-gray-300 px-4 py-2 rounded-md text-sm font-medium hover:border-primary bg-white min-w-35 justify-between"
+                  className="flex items-center gap-2 border border-gray-300 px-4 py-2 rounded-md text-sm font-medium hover:border-primary bg-white min-w-[140px] justify-between"
                 >
                   {sortOrder === 'newest' ? 'Newest' : 'Oldest'} 
                   <ChevronDown className={`w-4 h-4 transition-transform ${isSortOpen ? 'rotate-180' : ''}`} />
@@ -127,6 +133,7 @@ function HomeContent() {
             </div>
           </div>
 
+          {/* Product Grid */}
           {currentProducts.length > 0 ? (
             <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-6">
               {currentProducts.map((product) => (
@@ -145,46 +152,19 @@ function HomeContent() {
             </div>
           )}
 
-          {/* ... Pagination Logic (Unchanged) ... */}
-           {totalPages > 1 && (
-            <div className="mt-16 flex justify-center items-center select-none">
-              <button 
-                onClick={() => handlePageChange(validPage - 1)}
-                disabled={validPage === 1}
-                className="px-4 py-2 border rounded-l-md text-sm text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
-              >
-                <ChevronLeft className="w-4 h-4" /> Previous
-              </button>
-
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <button
-                  key={page}
-                  onClick={() => handlePageChange(page)}
-                  className={`px-4 py-2 text-sm font-bold transition-colors ${
-                    validPage === page
-                      ? "bg-secondary text-white"
-                      : "border border-gray-200 hover:bg-gray-50 text-gray-700"
-                  }`}
-                >
-                  {page}
-                </button>
-              ))}
-
-              <button 
-                onClick={() => handlePageChange(validPage + 1)}
-                disabled={validPage === totalPages}
-                className="px-4 py-2 border rounded-r-md text-sm text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
-              >
-                Next <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          )}
+          {/* Pagination Component */}
+          <Pagination 
+            currentPage={validPage} 
+            totalPages={totalPages} 
+            onPageChange={handlePageChange} 
+          />
         </div>
       </div>
     </main>
   );
 }
 
+// Main Home Component with Suspense
 export default function Home() {
   return (
     <Suspense fallback={<div className="container py-20 text-center">Loading products...</div>}>

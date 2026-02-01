@@ -37,7 +37,7 @@ export default function ProfileLayout({ children }: { children: React.ReactNode 
   return (
     <div className="container py-8 md:py-12 flex flex-col lg:flex-row gap-8 md:gap-12">
       
-      {/* 1. MOBILE DROPDOWN (Visible only on Mobile) */}
+      {/*  MOBILE DROPDOWN (Visible only on Mobile) */}
       <div className="lg:hidden">
         {/* User Info - Compact for Mobile */}
         <div className="flex items-center gap-3 mb-6">
@@ -86,7 +86,7 @@ export default function ProfileLayout({ children }: { children: React.ReactNode 
         </div>
       </div>
 
-      {/* 2. DESKTOP SIDEBAR (Hidden on Mobile) */}
+      {/* DESKTOP SIDEBAR (Hidden on Mobile) */}
       <aside className="hidden lg:block w-64 shrink-0 space-y-8">
         <div className="flex items-center gap-3 px-4">
           <div className="w-12 h-12 rounded-full overflow-hidden bg-primary relative">

@@ -82,6 +82,7 @@ export default function FilterSidebar({ className = "" }: FilterSidebarProps) {
             </label>
           </li>
 
+          {/* Individual Categories */}
           {categories.map((cat) => (
             <li key={cat} className="flex items-start gap-3">
               <input 

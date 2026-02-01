@@ -18,8 +18,10 @@ interface CartContextType {
   getCartTotal: () => number;
 }
 
+// Create Context
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
+// Cart Provider Component
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
 
@@ -73,12 +75,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const getCartTotal = () => items.reduce((total, item) => total + (item.price * item.quantity), 0);
 
   return (
+    // Provide context values
     <CartContext.Provider value={{ items, addToCart, removeFromCart, updateQuantity, getCartCount, getCartTotal }}>
       {children}
     </CartContext.Provider>
   );
 }
 
+// Custom hook to use the CartContext
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) throw new Error("useCart must be used within a CartProvider");

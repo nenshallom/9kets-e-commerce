@@ -47,9 +47,13 @@ A modern, responsive e-commerce application built with **Next.js 16 (App Router)
 
 ## Getting Started
 1. Clone the repository \
-  `git clone [https://github.com/nenshallom/9kets-e-commerce.git](https://github.com/nenshallom/9kets-e-commerce.git)`
+```bash
+  git clone https://github.com/nenshallom/9kets-e-commerce.git
+  ```
 2. Install dependencies \
-  `npm install`
+```bash
+npm install
+```
 3. Run the development server \
   `npm run dev`
 4. Open http://localhost:3000 with your browser. 

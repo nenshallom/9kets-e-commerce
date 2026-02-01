@@ -63,7 +63,7 @@ export default function OrderHistory() {
         {["All", "In Progress", "Delivered", "Cancelled"].map((tab) => (
           <button
             key={tab}
-            onClick={() => setActiveTab(tab === "Delivered" ? "Completed" : tab)} // Mapping "Delivered" to "Completed" for demo
+            onClick={() => setActiveTab(tab === "Delivered" ? "Completed" : tab)} // Mapping "Delivered" to "Completed"
             className={`flex-1 md:flex-none px-8 py-2 rounded-lg text-sm font-medium border transition-colors ${
               (tab === "Delivered" && activeTab === "Completed") || activeTab === tab
                 ? "bg-orange-100 border-primary text-secondary"
